@@ -24,10 +24,6 @@ const Layout = ({
       </Head>
 
       {children}
-      {/* <div>
-        <NavLinks />
-      </div>
-      <Footer /> */}
     </div>
   );
 };

@@ -3,98 +3,206 @@ import Layout from '../../components/Layouts/Layout';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { getLocalizationProps } from '../../Context/LangContext';
 import useTranslation from '../../hooks/useTranslation';
+import { useRouter } from 'next/router';
 interface service {
-  name: string;
+  name: {
+    ar: string;
+    en: string;
+  };
   description: {
     ar: string;
     en: string;
   };
   icon: string;
+  background: string;
 }
+let services = [
+  {
+    name: {
+      ar: 'سوبر ماركت',
+      en: 'Groceries',
+    },
+    description: {
+      ar:
+        'متوقفش في طوابير انتظار، احمي نفسك وعيلتك واطلب اونلاين من أفضل محلات السوبر ماركت القريبة ليك',
+      en:
+        "Don't stand in line ... order online! Choose from the top groceries delivering near you",
+    },
+    icon: 'https://i.imgur.com/km1XEwf.png',
+    background: '#05c46b',
+  },
+  {
+    name: {
+      ar: 'مغسلة',
+      en: 'Laundry',
+    },
+    description: {
+      ar: 'اغسل ملابسك بأحسن الأسعار',
+      en: 'Get your cloths clean and fresh for the best offer',
+    },
+    icon: 'https://i.imgur.com/sbTcPUi.png',
+    background: '#ffd32a',
+  },
+  {
+    name: {
+      ar: 'مطبخ منزلي',
+      en: 'Home Kitchen',
+    },
+    description: {
+      ar: 'طعام صحي وطازج ونظيف بأفضل الأسعار',
+      en: 'Fresh, Healthy and Clean food for best prices',
+    },
+    icon: 'https://i.imgur.com/H8Yogva.png',
+    background: '#ff5e57',
+  },
+  {
+    name: {
+      ar: 'صيدلية',
+      en: 'Pharmacy',
+    },
+    description: {
+      ar: 'علاجك هيوصلك لحد البيت في أي وقت من الأسبوع',
+      en: 'Get your Medications delivered to you 24/7',
+    },
+    icon: 'https://i.imgur.com/gKYvmJ4.png',
+    background: '#3c40c6',
+  },
+];
 const IndexPage: NextPage = () => {
+  const router = useRouter();
   const [servicesState, setServicesState] = useState<service[]>([]);
+  const [mapModalState, setMapModalState] = useState(false);
+  const [user, setUser] = useState(false);
   const { t, locale } = useTranslation();
   useEffect(() => {
-    let services = [
-      {
-        name: 'downPay',
-        description: {
-          ar: 'تقدر تدفع مقدم قد ايه ؟',
-          en:
-            'Search By Down Payment And Choose How Much You Want To Pay Upfront.',
-        },
-
-        icon:
-          '<svg style="width: 75px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#3730A3"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>',
-      },
-      {
-        name: 'monthlyPay',
-        description: {
-          en:
-            'Choose How Much You Want To Spend Per Month And Find Options Within Your Budget.',
-          ar: 'القسط الشهري المناسب ليك ؟',
-        },
-        icon:
-          '<svg style="width: 75px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#3730A3"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>        ',
-      },
-      {
-        name: 'deliveryDate',
-        description: {
-          en: 'Find A Home That Is Ready-To-Move When You Are Ready To Move.',
-          ar: 'تحب تسكن امتى ؟',
-        },
-
-        icon:
-          '<svg style="width: 75px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#3730A3"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>',
-      },
-      {
-        name: 'finishingType',
-        description: {
-          ar: 'تفضل تستلم وحدة متشطبة ولا تشطب بنفسك',
-          en: 'Choose A Home That Is Customisable To Your Liking.',
-        },
-        icon:
-          '<svg style="width: 75px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#3730A3"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>',
-      },
-    ];
     setServicesState(services);
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      router.push(`/${locale}/home`);
+    }
+  }, [user]);
+  const openMapHandler = () => {
+    setMapModalState(true);
+    setUser(true);
+  };
   return (
-    <Layout title="Realestate Brand">
-      {/* top section */}
+    <Layout title="Local E-Commerce">
+      {/* location section */}
       <section
         className="flex flex-wrap bg-local pt-20 items-center justify-center"
         style={{
           background:
-            'url(https://www.sakneen.com/assets/images/landingPage/landingHeader.png) no-repeat 50% fixed',
+            'url(https://i.imgur.com/SnKVR5M.png) no-repeat 50% fixed',
           backgroundSize: 'cover',
           minHeight: '100vh',
         }}
       >
-        <h1 className="text-white">{t('header')}</h1>
+        <div
+          style={{
+            width: '70%',
+            margin: '0 auto',
+            display: 'block',
+            textAlign: 'center',
+          }}
+        >
+          <h1 className="text-white">Order Online in Egypt</h1>
+          <button
+            onClick={openMapHandler}
+            style={{
+              background: '#fff',
+              outline: 'none',
+              border: '1px solid #ccc',
+              boxShadow: '0 2px 2px #eee',
+              padding: '5px 15px',
+              display: 'block',
+              margin: '20px auto',
+            }}
+          >
+            <i className="fas fa-map-marker text-green-700"></i>{' '}
+            <span className="font-bold text-lg text-gray-600 px-3">
+              Address or ZIP Code
+            </span>
+          </button>
+        </div>
       </section>
-      {/* search factors  */}
+      {/* Services Section   */}
       <section className="container mx-auto px-2 my-10">
         <h3 className="text-center text-blue-900 text-4xl sm:text-3xl font-bold">
-          {t('homeSearchHeader')}
+          Our Services
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-2">
           {servicesState.map((service, key) => {
             return (
-              <div className="text-center my-5" key={key}>
+              <div
+                className="m-5 flex shadow-md"
+                style={{ backgroundColor: '#f3f3f3' }}
+                key={key}
+              >
                 <div
-                  style={{ display: 'flex', justifyContent: 'center' }}
-                  dangerouslySetInnerHTML={{ __html: service.icon }}
-                />
-                {/* {service.icon} */}
-                <h3 className="text-3xl font-bold my-1 text-indigo-800">
-                  {t(`${service.name}`)}
-                </h3>
-                <p>{service.description[locale]}</p>
+                  style={{
+                    padding: '0px 0px 10px 10px',
+                    borderRadius: '5px 0 0 5px',
+                    marginRight: '10px',
+                    borderRight: '1px solid #ccc',
+                    backgroundColor: service.background,
+                  }}
+                >
+                  <img
+                    src={service.icon}
+                    style={{ width: '150px', height: '135px' }}
+                  />
+                </div>
+                <div
+                  style={{
+                    padding: '5px 10px',
+                    borderRadius: '0 5px 5px 0',
+                  }}
+                >
+                  <h3 className="text-2xl font-bold my-1 text-indigo-800">
+                    {service.name[locale]}
+                  </h3>
+                  <p>{service.description[locale]}</p>
+                </div>
               </div>
             );
           })}
+        </div>
+      </section>
+      {/* App Section */}
+      <section className="container mx-auto px-2 my-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="col-span-1 md:col-span-2">
+            <h3 className="text-2xl font-bold py-3">
+              Download our App for Android and IOS
+            </h3>
+            <p className="text-md pb-3">Get what you need when you need it</p>
+            <a style={{ display: 'inline-block' }}>
+              <img
+                src="https://i.imgur.com/Th4Q8Dz.png"
+                style={{ width: '100px', height: '50px' }}
+              />
+            </a>
+            <a
+              style={{
+                marginLeft: locale === 'en' ? '15px' : '0',
+                marginRight: locale === 'ar' ? '15px' : '0',
+                display: 'inline-block',
+              }}
+            >
+              <img
+                src="https://i.imgur.com/ZC9kBXw.png"
+                style={{ width: '100px', height: '50px' }}
+              />
+            </a>
+          </div>
+          <div>
+            <img
+              src="https://i.imgur.com/riVTNDT.png"
+              style={{ width: '100%' }}
+            />
+          </div>
         </div>
       </section>
     </Layout>
