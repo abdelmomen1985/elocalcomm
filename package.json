@@ -1,0 +1,49 @@
+{
+  "name": "with-typescript",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.2.5",
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.13",
+    "@material-ui/core": "^4.11.0",
+    "apollo-boost": "^0.4.9",
+    "apollo-client": "^2.6.10",
+    "apollo-link-error": "^1.1.13",
+    "apollo-link-http": "^1.5.17",
+    "apollo-link-ws": "^1.0.20",
+    "classnames": "^2.2.6",
+    "deepmerge": "^4.2.2",
+    "google-maps-react": "^2.0.6",
+    "graphql": "^15.4.0",
+    "isomorphic-unfetch": "^3.1.0",
+    "next": "latest",
+    "next-images": "^1.6.2",
+    "next-iron-session": "^4.1.10",
+    "rc-slider": "^9.7.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-elastic-carousel": "^0.10.0",
+    "react-google-maps": "^9.4.5",
+    "react-hook-form": "^6.14.0",
+    "styled-components": "^5.2.1",
+    "subscriptions-transport-ws": "^0.9.18"
+  },
+  "devDependencies": {
+    "@types/deepmerge": "^2.2.0",
+    "@types/node": "^12.12.21",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
+    "postcss-preset-env": "^6.7.0",
+    "tailwindcss": "^1.9.6",
+    "typescript": "4.0"
+  },
+  "license": "MIT"
+}
