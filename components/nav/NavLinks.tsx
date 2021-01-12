@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import useTranslation from '../../hooks/useTranslation';
-import ActiveLink from './../ActiveLink';
-import { AppContext } from '../../Context/AppContextProvider';
+import React, { useContext } from "react";
+import useTranslation from "../../hooks/useTranslation";
+import ActiveLink from "./../ActiveLink";
+import { AppContext } from "../../Context/AppContextProvider";
 
 export const NavLinks = (props: any) => {
-  // const { user, setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
 
   const { t, locale } = useTranslation();
 
@@ -28,12 +28,12 @@ export const NavLinks = (props: any) => {
         }
       `}</style>
       <ActiveLink activeClassName="active" href={`/${locale}/`}>
-        <a className="nav-link mx-2">{t('navHome')}</a>
+        <a className="nav-link mx-2">{t("navHome")}</a>
       </ActiveLink>
       <ActiveLink activeClassName="active" href={`/${locale}/about`}>
-        <a className="nav-link mx-2">{t('navAbout')}</a>
+        <a className="nav-link mx-2">{t("navAbout")}</a>
       </ActiveLink>
-      {/* {!user?.id ? (
+      {!user?.id ? (
         <a className="nav-link mx-2" onClick={() => props.setLoginModal(true)}>
           {t("navSign")}
         </a>
@@ -60,7 +60,7 @@ export const NavLinks = (props: any) => {
             </a>
           </ActiveLink>
         </>
-      )} */}
+      )}
     </>
   );
 };

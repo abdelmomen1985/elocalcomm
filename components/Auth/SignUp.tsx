@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
-import { NEW_USER } from '../../query/user';
+import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { NEW_USER } from "../../query/user";
 
 export default function SignUp(props: any) {
   const { register, handleSubmit, getValues, errors } = useForm();
@@ -9,13 +9,16 @@ export default function SignUp(props: any) {
   const [addUser] = useMutation(NEW_USER);
   const onRegister = async (data: any) => {
     console.log(data);
-    console.log(data.firstName + ' ' + data.lastName);
+    console.log(data.firstName + " " + data.lastName);
     setNewUserData(data);
     console.log(newUserData);
     props.setLoginModal(false);
     await addUser({
       variables: {
-        name: data.firstName + ' ' + data.lastName,
+        name: {
+          first: data.firstName,
+          last: data.lastName,
+        },
         username: data.email,
         password: data.password,
       },
@@ -47,7 +50,7 @@ export default function SignUp(props: any) {
             name="firstName"
             placeholder="First Name"
             ref={register({
-              required: 'First Name is Required',
+              required: "First Name is Required",
               minLength: {
                 value: 3,
                 message: "First Name can't be shorter than 3 Characters",
@@ -69,7 +72,7 @@ export default function SignUp(props: any) {
             name="lastName"
             placeholder="Last Name"
             ref={register({
-              required: 'Last Name is Required',
+              required: "Last Name is Required",
               minLength: {
                 value: 3,
                 message: "Last Name can't be shorter than 3 Characters",
@@ -93,10 +96,10 @@ export default function SignUp(props: any) {
             name="email"
             placeholder="Email"
             ref={register({
-              required: 'Email is Required',
+              required: "Email is Required",
               pattern: {
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                message: 'Please Enter A valid Email Address',
+                message: "Please Enter A valid Email Address",
               },
             })}
           />
@@ -115,7 +118,7 @@ export default function SignUp(props: any) {
             name="phone"
             placeholder="Phone Number"
             ref={register({
-              required: 'Phone Number is Required',
+              required: "Phone Number is Required",
               minLength: {
                 value: 11,
                 message: "Phone Number can't be less than 11 Characters",
@@ -137,7 +140,7 @@ export default function SignUp(props: any) {
               //   },
               pattern: {
                 value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,9}$/im,
-                message: 'Please Enter A valid Phone Number',
+                message: "Please Enter A valid Phone Number",
               },
             })}
           />
@@ -158,7 +161,7 @@ export default function SignUp(props: any) {
             name="password"
             placeholder="Password"
             ref={register({
-              required: 'Password is Required',
+              required: "Password is Required",
               minLength: {
                 value: 8,
                 message: "password can't be shorter than 8 Characters",
@@ -180,7 +183,7 @@ export default function SignUp(props: any) {
             name="confirmPassword"
             placeholder="Confirm Password"
             ref={register({
-              required: 'Password is Required',
+              required: "Password is Required",
               minLength: {
                 value: 8,
                 message: "password can't be shorter than 8 Characters",
